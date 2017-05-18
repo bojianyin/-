@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://www.jq22.com/jquery/jquery-2.1.1.js"></script>
+	<style>
+	*{padding:0;margin:0;}
+	main{width:300px;height:400px;background: #ccc;position: relative;}
+	main>ul{width:100%;padding-top:10px;}
+	main>ul>li{height:20px;background: #666;text-align:center;color:#fff;line-height: 20px;margin-bottom:5px;border:2px solid transparent;}
+	main>ul>li.hove{border-color:#0066ff;}
+	main>div{background: rgba(0,0,0,.5)}
+	</style>
+</head>
+<body>
+	<main>
+		<ul>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+		</ul>
+	</main>
+	<script>
+	function eve(){
+		$("main").mousedown(function(e){
+			var creatDiv=document.createElement("div");
+			with(creatDiv.style){
+				position="absolute";
+				left=e.clientX+"px";
+				top=e.clientY+"px";
+			}
+			$("main").append(creatDiv);
+			var init=e.pageY;
+			var initX=e.pageX;
+			$(this).mousemove(function(ev){
+				ev.preventDefault();
+				if((ev.pageY-init)>=0&&(ev.pageX-initX)>0){
+					$("main>div").css({"width":(ev.pageX-initX)+"px","height":(ev.pageY-init)+"px"})
+				}else if((ev.pageY-init)>=0&&(ev.pageX-initX)<0){
+					$("main>div").css({"width":(initX-ev.pageX)+"px","height":(ev.pageY-init)+"px","left":ev.clientX+"px"})
+				}else if((ev.pageY-init)<=0&&(ev.pageX-initX)>0){
+					$("main>div").css({"width":(ev.pageX-initX)+"px","height":(init-ev.pageY)+"px","top":ev.clientY+"px"})
+				}else if((ev.pageY-init)<=0&&(ev.pageX-initX)<0){
+					$("main>div").css({"width":(initX-ev.pageX)+"px","height":(init-ev.pageY)+"px","left":ev.clientX+"px","top":ev.clientY+"px"})
+				}
+				
+				$("main>ul>li").each(function(index,e){
+					if((e.offsetTop+20)>=init&&e.offsetTop<ev.pageY){
+						$(e).addClass("hove")
+					}else if((e.offsetTop-20)<=init&&(e.offsetTop+20)>ev.pageY){
+						$(e).addClass("hove")
+					}else{
+						$(e).removeClass("hove")
+					}
+				})
+			})
+			$(document).mouseup(function(){
+				$("main").off();
+				$("main>div").remove();
+				eve();
+			})
+		})
+	}
+	eve();
+	$(document).mousedown(function(){
+		$("main>ul>li").removeClass("hove")
+	})
+	</script>
+</body>
+</html>
