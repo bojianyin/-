@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>xiaobosssssssssshhhdasdawjd</title>
+	<title>选中</title>
 	<script src="http://www.jq22.com/jquery/jquery-2.1.1.js"></script>
 	<style>
 	*{padding:0;margin:0;}
@@ -46,7 +46,6 @@
 				}else if((ev.pageY-init)<=0&&(ev.pageX-initX)<0){
 					$("main>div").css({"width":(initX-ev.pageX)+"px","height":(init-ev.pageY)+"px","left":ev.clientX+"px","top":ev.clientY+"px"})
 				}
-				
 				$("main>ul>li").each(function(index,e){
 					if((e.offsetTop+20)>=init&&e.offsetTop<ev.pageY){
 						$(e).addClass("hove")
